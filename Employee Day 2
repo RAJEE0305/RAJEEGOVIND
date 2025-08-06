@@ -1,0 +1,285 @@
+mysql> create database rajee3;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> use rajee3;
+Database changed
+mysql> create table employee(EmpID int,Name varchar(50),Department varchar(50),Gender varchar(10),Salary decimal(10,2),Age int ,Experience int);
+Query OK, 0 rows affected (0.07 sec)
+   
+mysql> insert into employee values(1, 'Alice', 'HR', 'Female', 50000, 28, 3),
+    -> (2, 'Bob', 'Finance', 'Male', 60000, 32, 5),
+    -> (3, 'Charlie', 'IT', 'Male', 70000, 30, 6),
+    -> (4, 'David', 'HR', 'Male', 48000, 45, 20),
+    -> (5, 'Eva', 'IT', 'Female', 72000, 29, 4),
+    -> (6, 'Frank', 'Finance', 'Male', 58000, 35, 8),
+    -> (7, 'Grace', 'Marketing', 'Female', 50000, 27, 2),
+    -> (8, 'Hannah', 'IT', 'Female', 75000, 31, 7),
+    -> (9, 'Ivy', 'Finance', 'Female', 62000, 26, 3),
+    -> (10, 'Jack', 'Marketing', 'Male', 52000, 38, 10),
+    -> (11, 'Kiran', 'IT', 'Male', 68000, 33, 9),
+    -> (12, 'Lily', 'HR', 'Female', 55000, 40, 15),
+    -> (13, 'Mohan', 'Finance', 'Male', 61000, 29, 4),
+    -> (14, 'Nina', 'Marketing', 'Female', 53000, 36, 11),
+    -> (15, 'Oscar','IT', 'Male', 71000, 34, 10);
+Query OK, 15 rows affected (0.06 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+---------+------------+--------+----------+------+------------+
+| EmpID | Name    | Department | Gender | Salary   | Age  | Experience |
++-------+---------+------------+--------+----------+------+------------+
+|     1 | Alice   | HR         | Female | 50000.00 |   28 |          3 |
+|     2 | Bob     | Finance    | Male   | 60000.00 |   32 |          5 |
+|     3 | Charlie | IT         | Male   | 70000.00 |   30 |          6 |
+|     4 | David   | HR         | Male   | 48000.00 |   45 |         20 |
+|     5 | Eva     | IT         | Female | 72000.00 |   29 |          4 |
+|     6 | Frank   | Finance    | Male   | 58000.00 |   35 |          8 |
+|     7 | Grace   | Marketing  | Female | 50000.00 |   27 |          2 |
+|     8 | Hannah  | IT         | Female | 75000.00 |   31 |          7 |
+|     9 | Ivy     | Finance    | Female | 62000.00 |   26 |          3 |
+|    10 | Jack    | Marketing  | Male   | 52000.00 |   38 |         10 |
+|    11 | Kiran   | IT         | Male   | 68000.00 |   33 |          9 |
+|    12 | Lily    | HR         | Female | 55000.00 |   40 |         15 |
+|    13 | Mohan   | Finance    | Male   | 61000.00 |   29 |          4 |
+|    14 | Nina    | Marketing  | Female | 53000.00 |   36 |         11 |
+|    15 | Oscar   | IT         | Male   | 71000.00 |   34 |         10 |
++-------+---------+------------+--------+----------+------+------------+
+15 rows in set (0.01 sec)
+
+mysql> select Department ,sum(salary) from employee group by Department;
++------------+-------------+
+| Department | sum(salary) |
++------------+-------------+
+| HR         |   153000.00 |
+| Finance    |   241000.00 |
+| IT         |   356000.00 |
+| Marketing  |   155000.00 |
++------------+-------------+
+4 rows in set (0.03 sec)
+
+mysql> select Department,sum(salary) from employee group by Department having sum(salary)>200000;
++------------+-------------+
+| Department | sum(salary) |
++------------+-------------+
+| Finance    |   241000.00 |
+| IT         |   356000.00 |
++------------+-------------+
+2 rows in set (0.01 sec)
+
+mysql> select Department, count(*) from employee group by Department;
++------------+----------+
+| Department | count(*) |
++------------+----------+
+| HR         |        3 |
+| Finance    |        4 |
+| IT         |        5 |
+| Marketing  |        3 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select Department, count() from employee group by Department having count()>3;
++------------+----------+
+| Department | count(*) |
++------------+----------+
+| Finance    |        4 |
+| IT         |        5 |
++------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select Gender,avg(salary) from employee group by Gender;
++--------+--------------+
+| Gender | avg(salary)  |
++--------+--------------+
+| Female | 59571.428571 |
+| Male   | 61000.000000 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select Gender,count() from employee group by Gender having count()>5;
++--------+----------+
+| Gender | count(*) |
++--------+----------+
+| Female |        7 |
+| Male   |        8 |
++--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select department ,avg(salary) from employee group by Department having avg(salary)>60000;
++------------+--------------+
+| department | avg(salary)  |
++------------+--------------+
+| Finance    | 60250.000000 |
+| IT         | 71200.000000 |
++------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select Gender,Department ,count(*) from employee group by Gender,Department;
++--------+------------+----------+
+| Gender | Department | count(*) |
++--------+------------+----------+
+| Female | HR         |        2 |
+| Male   | Finance    |        3 |
+| Male   | IT         |        3 |
+| Male   | HR         |        1 |
+| Female | IT         |        2 |
+| Female | Marketing  |        2 |
+| Female | Finance    |        1 |
+| Male   | Marketing  |        1 |
++--------+------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select department ,avg(experience) from employee group by department having avg(experience)>7;
++------------+-----------------+
+| department | avg(experience) |
++------------+-----------------+
+| HR         |         12.6667 |
+| IT         |          7.2000 |
+| Marketing  |          7.6667 |
++------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select department ,max(salary) from employee group by department having max(salary)>70000;
++------------+-------------+
+| department | max(salary) |
++------------+-------------+
+| IT         |    75000.00 |
++------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select Department ,avg(age) from employee group by department ;
++------------+----------+
+| Department | avg(age) |
++------------+----------+
+| HR         |  37.6667 |
+| Finance    |  30.5000 |
+| IT         |  31.4000 |
+| Marketing  |  33.6667 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,gender,avg(salary) from employee where gender='female' group by department having avg(salary)>60000;
++------------+--------+--------------+
+| department | gender | avg(salary)  |
++------------+--------+--------------+
+| IT         | Female | 73500.000000 |
+| Finance    | Female | 62000.000000 |
++------------+--------+--------------+
+2 rows in set (0.01 sec)
+
+mysql> select department,sum(experience) from employee group by department having sum(experience)>20;
++------------+-----------------+
+| department | sum(experience) |
++------------+-----------------+
+| HR         |              38 |
+| IT         |              36 |
+| Marketing  |              23 |
++------------+-----------------+
+3 rows in set (0.00 sec)
+
+
+mysql> select gender,department,avg(experience) from employee group by department,gender;;
++--------+------------+-----------------+
+| gender | department | avg(experience) |
++--------+------------+-----------------+
+| Female | HR         |          9.0000 |
+| Male   | Finance    |          5.6667 |
+| Male   | IT         |          8.3333 |
+| Male   | HR         |         20.0000 |
+| Female | IT         |          5.5000 |
+| Female | Marketing  |          6.5000 |
+| Female | Finance    |          3.0000 |
+| Male   | Marketing  |         10.0000 |
++--------+------------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql> select department ,avg(age) from employee group by department having avg(age)<30;
+Empty set (0.00 sec)
+
+mysql> select department ,count() from employee where gender='female' group by department having count()>1;
++------------+----------+
+| department | count(*) |
++------------+----------+
+| HR         |        2 |
+| IT         |        2 |
+| Marketing  |        2 |
++------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT department
+    -> FROM employee
+    -> WHERE gender = 'Female' OR gender = 'Male'
+    -> GROUP BY department;
++------------+
+| department |
++------------+
+| HR         |
+| Finance    |
+| IT         |
+| Marketing  |
++------------+
+4 rows in set (0.01 sec)
+
+mysql> select department ,avg(experience)from employee group by department order by avg(experience)desc limit 1;
++------------+-----------------+
+| department | avg(experience) |
++------------+-----------------+
+| HR         |         12.6667 |
++------------+-----------------+
+1 row in set (0.02 sec)
+
+
+mysql> select department,gender,sum(salary) from employee group by department,gender having sum(salary)>100000;
++------------+--------+-------------+
+| department | gender | sum(salary) |
++------------+--------+-------------+
+| HR         | Female |   105000.00 |
+| Finance    | Male   |   179000.00 |
+| IT         | Male   |   209000.00 |
+| IT         | Female |   147000.00 |
+| Marketing  | Female |   103000.00 |
++------------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select department ,count(*) age from employee where age<35 group by department;
++------------+-----+
+| department | age |
++------------+-----+
+| HR         |   1 |
+| Finance    |   3 |
+| IT         |   5 |
+| Marketing  |   1 |
++------------+-----+
+4 rows in set (0.00 sec)
+
+mysql> select department ,sum(salary)from employee group by department order by sum(salary)desc limit 3;
++------------+-------------+
+| department | sum(salary) |
++------------+-------------+
+| IT         |   356000.00 |
+| Finance    |   241000.00 |
+| Marketing  |   155000.00 |
++------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select department from employee group by department having max(experience)>5;
++------------+
+| department |
++------------+
+| HR         |
+| Finance    |
+| IT         |
+| Marketing  |
++------------+
+4 rows in set (0.01 sec)
+
+mysql> select department from employee where salary<55000;
++------------+
+| department |
++------------+
+| HR         |
+| HR         |
+| Marketing  |
+| Marketing  |
+| Marketing  |
++------------+
+5 rows in set (0.00 sec)
