@@ -1,0 +1,87 @@
+mysql> create database rajee2;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use rajee2;
+Database changed
+mysql> INSERT INTO Sales (sale_id, product_id, quantity_sold, sale_date, total_price) VALUES
+    -> (1,101,5,'2024-01-01',2500.00),
+    -> (2,102,3,'2024-01-02',900.00),
+    -> (3,103,2,'2024-01-03',60.00),
+    -> (4,104,4,'2024-01-04',80.00),
+    -> (5,105,6,'2024-01-05',90.00);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from sales;
++---------+------------+---------------+------------+-------------+
+| sale_id | product_id | quantity_sold | sale_date  | total_price |
++---------+------------+---------------+------------+-------------+
+|       1 |        101 |             5 | 2024-01-01 |     2500.00 |
+|       2 |        102 |             3 | 2024-01-02 |      900.00 |
+|       3 |        103 |             2 | 2024-01-03 |       60.00 |
+|       4 |        104 |             4 | 2024-01-04 |       80.00 |
+|       5 |        105 |             6 | 2024-01-05 |       90.00 |
++---------+------------+---------------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select sale_id,sale_date from sales;
++---------+------------+
+| sale_id | sale_date  |
++---------+------------+
+|       1 | 2024-01-01 |
+|       2 | 2024-01-02 |
+|       3 | 2024-01-03 |
+|       4 | 2024-01-04 |
+|       5 | 2024-01-05 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from sales where total_price>100;
++---------+------------+---------------+------------+-------------+
+| sale_id | product_id | quantity_sold | sale_date  | total_price |
++---------+------------+---------------+------------+-------------+
+|       1 |        101 |             5 | 2024-01-01 |     2500.00 |
+|       2 |        102 |             3 | 2024-01-02 |      900.00 |
++---------+------------+---------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select sale_id,total_price from sales where sale_date='2024-01-03';
++---------+-------------+
+| sale_id | total_price |
++---------+-------------+
+|       3 |       60.00 |
++---------+-------------+
+1 row in set (0.01 sec)
+
+mysql> select sum(total_price)as total_revenue from sales;
++---------------+
+| total_revenue |
++---------------+
+|       3630.00 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(quantity_sold)as total_quantity_sold from sales;
++---------------------+
+| total_quantity_sold |
++---------------------+
+|                  20 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select sale_id,product_id,total_price from sales where quantity_sold>4;
++---------+------------+-------------+
+| sale_id | product_id | total_price |
++---------+------------+-------------+
+|       1 |        101 |     2500.00 |
+|       5 |        105 |       90.00 |
++---------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(total_price)as average_total_price from sales;
++---------------------+
+| average_total_price |
++---------------------+
+|          726.000000 |
++---------------------+
+1 row in set (0.00 sec)
