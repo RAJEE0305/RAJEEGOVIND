@@ -1,0 +1,117 @@
+mysql> create database rajee;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use rajee;
+Database changed
+mysql> CREATE TABLE Products (
+    -> product_id INT PRIMARY KEY,
+    -> product_name VARCHAR(100),
+    -> category VARCHAR(50),
+    -> unit_price DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Products (product_id,product_name,category,unit_price)VALUES
+    -> (101,'Laptop','Electronics',500.00),
+    -> (102,'Smartphone','Electronics',300.00),
+    -> (103,'Headphones','Electronics',30.00),
+    -> (104,'Keyboard','Electronics',20.00),
+    -> (105,'Mouse','Electronics',15.00);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Products;
++------------+--------------+-------------+------------+
+| product_id | product_name | category    | unit_price |
++------------+--------------+-------------+------------+
+|        101 | Laptop       | Electronics |     500.00 |
+|        102 | Smartphone   | Electronics |     300.00 |
+|        103 | Headphones   | Electronics |      30.00 |
+|        104 | Keyboard     | Electronics |      20.00 |
+|        105 | Mouse        | Electronics |      15.00 |
++------------+--------------+-------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> select product_name,unit_price from Products;
++--------------+------------+
+| product_name | unit_price |
++--------------+------------+
+| Laptop       |     500.00 |
+| Smartphone   |     300.00 |
+| Headphones   |      30.00 |
+| Keyboard     |      20.00 |
+| Mouse        |      15.00 |
++--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products where category='Electronics';
++------------+--------------+-------------+------------+
+| product_id | product_name | category    | unit_price |
++------------+--------------+-------------+------------+
+|        101 | Laptop       | Electronics |     500.00 |
+|        102 | Smartphone   | Electronics |     300.00 |
+|        103 | Headphones   | Electronics |      30.00 |
+|        104 | Keyboard     | Electronics |      20.00 |
+|        105 | Mouse        | Electronics |      15.00 |
++------------+--------------+-------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> select product_id,product_name from Products where unit_price>100;
++------------+--------------+
+| product_id | product_name |
++------------+--------------+
+|        101 | Laptop       |
+|        102 | Smartphone   |
++------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(unit_price)as average_price from Products;
++---------------+
+| average_price |
++---------------+
+|    173.000000 |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select product_name,unit_price from Products where unit_price=(select MAX(unit_price)from products);
++--------------+------------+
+| product_name | unit_price |
++--------------+------------+
+| Laptop       |     500.00 |
++--------------+------------+
+1 row in set (0.01 sec)
+
+mysql> select product_name,unit_price from Products order by unit_price desc;
++--------------+------------+
+| product_name | unit_price |
++--------------+------------+
+| Laptop       |     500.00 |
+| Smartphone   |     300.00 |
+| Headphones   |      30.00 |
+| Keyboard     |      20.00 |
+| Mouse        |      15.00 |
++--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select product_name,unit_price from Products where unit_price between 20 and 600;
++--------------+------------+
+| product_name | unit_price |
++--------------+------------+
+| Laptop       |     500.00 |
+| Smartphone   |     300.00 |
+| Headphones   |      30.00 |
+| Keyboard     |      20.00 |
++--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select product_name,category from Products order by category asc;
++--------------+-------------+
+| product_name | category    |
++--------------+-------------+
+| Laptop       | Electronics |
+| Smartphone   | Electronics |
+| Headphones   | Electronics |
+| Keyboard     | Electronics |
+| Mouse        | Electronics |
++--------------+-------------+
+5 rows in set (0.01 sec)
